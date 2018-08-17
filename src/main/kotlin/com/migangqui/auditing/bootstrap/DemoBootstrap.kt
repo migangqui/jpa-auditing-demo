@@ -17,9 +17,7 @@ class DemoBootstrap(private val demoEntityRepository: DemoEntityRepository) {
 		logger.info { "Setting up AuditingDemo" }
 		
 		/* Entity */
-		val demoEntity: DemoEntity = DemoEntity()
-		demoEntity.name = RandomStringUtils.randomAlphabetic(8)
-		demoEntity.content = RandomStringUtils.randomAlphabetic(16)
+		val demoEntity: DemoEntity = DemoEntity(0, RandomStringUtils.randomAlphabetic(8), RandomStringUtils.randomAlphabetic(16))
 		
 		/* Persist entity*/
 		val savedDemoEntity = demoEntityRepository.save(demoEntity)
@@ -27,9 +25,9 @@ class DemoBootstrap(private val demoEntityRepository: DemoEntityRepository) {
 		Thread.sleep(2000)
 		
 		/* Update entity */
-		savedDemoEntity.name = RandomStringUtils.randomAlphabetic(8)
+		savedDemoEntity.name = "modified"
 		demoEntityRepository.save(savedDemoEntity)
 		
-		/** Now check MySQL. Column last_modified_date **/
+		/** Now check MySQL. Columns crated_by, creation_date, last_modified_by, last_modified_date **/
 	}
 }
